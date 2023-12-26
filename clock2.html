@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0%;
+        padding: 0%;
+        box-sizing: border-box;
+    }
+    body{
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+        background:linear-gradient(#3c0303,#00006dba);
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .myClock{
+        background-color: aliceblue;
+        height: 350px;
+        width: 350px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1rem;
+        border-radius:50% ;
+        background: linear-gradient(blue,rgb(104,9,9));
+        box-shadow: 1px 0px 5px 10px palevioletred;
+        color: aliceblue;
+        text-decoration-line:unset ;
+    }
+    #clock{
+        font-size: 36px;
+    }
+    #date{
+        font-size: 18px;
+    }
+    @media screen and(max-width:450px) {
+        .myClock{
+            width: 280px;
+            height: 280px;
+
+        }
+        #date{
+            font-size: 14px;
+        }
+        
+    }
+</style>
+<body>
+   <div class="myClock">
+    <h1>Digital Clock</h1>
+    <div id="clock"></div>
+    <div id="date"></div>
+   </div> 
+   <script>
+    let clockElement= document.getElementById("clock");
+    let dateElement= document.getElementById("date")
+
+    function updateClock() {
+        let now= new Date();
+        let hours=now.getHours();
+        let minutes=now.getMinutes();
+        let seconds=now.getSeconds();
+        
+        let formattedTime= padZero(hours)+":"+padZero(minutes)+":"+padZero(seconds);
+        clockElement.textContent=formattedTime;
+
+        let daysOfWeek=[
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+        ];
+        let months=[
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+        let dayOfWeek = daysOfWeek[now.getDay()];
+        let month = months[now.getMonth()];
+        let dayOfMonth = now.getDate();
+        let year = now.getFullYear();
+
+        let formattedDate=dayOfWeek+","+ month +" "+ dayOfMonth +","+year;
+
+        dateElement.textContent=formattedDate;
+    }
+      function padZero(num){
+        return(num<10 ?"0":"")+num;
+      }
+       setInterval(updateClock,1000);
+
+      updateClock();
+    
+   </script>
+</body>
+</html>

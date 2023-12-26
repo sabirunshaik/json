@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #box {
+      border: 1px solid black;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #textwrapper {
+      height: 18%;
+      width: auto;
+      border: 1px solid black;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 1rem;
+    }
+    button {
+      padding: 1rem 3rem;
+      font-size: 1.5rem;
+      background-color: blueviolet;
+      color: white;
+      margin-top: 2rem;
+      border-radius: 1rem;
+      cursor: pointer;
+    }
+    #qoute {
+      font-size: 1.5rem;
+    }
+    #author {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  </style>
+  <body>
+    <div id="user-container">
+      <h1>User data app</h1>
+      <button onclick="getUserData()">GET USER DATA</button>
+      <div id="userCards"></div>
+    </div>
+    <script>
+      async function getUserData() {
+        const userCardContainer = document.getElementById("userCards");
+        userCardContainer.innerHTML = "";
+
+        try {
+          const response = await fetch("https://randomuser.me/api/?results=3");
+          const data = await response.json();
+
+          const users = data.results;
+          console.log(users);
+
+          users.forEach((user) => {
+            DisplayUser(user);
+            // console.log(user);
+          });
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          alert("Error fetching user data.please try again");
+        }
+      }
+      function DisplayUser(user) {
+        const userCardContainer = document.getElementById("userCards");
+        const userCard = document.createElement("div");
+        userCard.classList.add("user-card");
+
+        const { name, email, picture, gender } = user;
+
+        userCard.innerHTML =`
+        <img src="${picture.large}" alt="${name.first} ${name.last}" />
+        <p><strong>Name:</strong> ${name.first} ${name.last}</p>
+        <p><strong>Email:</strong> ${email}</p>`;
+
+        userCardContainer.appendchild(userCard);
+      }
+    </script>
+  </body>
+</html>
